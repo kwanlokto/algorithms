@@ -7,29 +7,30 @@ class Expression:
         self.constant = constant
         self.__simplify_expression()        
     
-    def __simplify_expression(self):
+    def solve(self, assignments):
         """
-        Remove all duplicate variables
+        Solve the expression by assigning the variables values from assignment
+        Args:
+            assignments (dict): each variable (key) is assigned a value
+        Returns:
+            float: solution for the given variable assignment
         """
-        new_terms = []
-        while len(self.terms) > 0:                  
-            for i in range(len(self.terms) - 1, 0, -1):
-                if self.terms[0] == self.terms[i]:
-                    term = self.terms.pop(i)
-                    self.terms[0].coefficient += term.coefficient
-            new_terms.append(self.terms.pop(0))
-        self.terms = new_terms
-    
-    def solve(self, assignment):
         result = self.constant
         for term in self.terms:
-            if term.variable in assignment:
-                result += assignment[term.variable] * term.coefficient
+            if term.variable in assignments:
+                result += assignments[term.variable] * term.coefficient
+            else:
+                raise ValueError("Some variables are not assigned values.")
         return result
 
     def substitute(self, assignments):
-        found = True
+        """
+        Substitute variables with corresponding variable assignments
 
+        Args:
+            assignments (dict): each variable (key) is rewritten in terms of other variables
+        """
+        found = True
         while found:
             found = False
             for var in assignments:
@@ -40,6 +41,9 @@ class Expression:
         """
         Substitute sub_var with fcn and update the terms
 
+        Args:
+            sub_var (str): variable we are substituting
+            fcn (Expression): expression that is replacing the variable
         Returns:
             bool: Whether terms has been updated or not
         """
@@ -55,6 +59,19 @@ class Expression:
                 self.terms.pop(i)
                 self.terms.extend(fcn.terms)
         return found
+    
+    def __simplify_expression(self):
+        """
+        Remove all duplicate variables
+        """
+        new_terms = []
+        while len(self.terms) > 0:                  
+            for i in range(len(self.terms) - 1, 0, -1):
+                if self.terms[0] == self.terms[i]:
+                    term = self.terms.pop(i)
+                    self.terms[0].coefficient += term.coefficient
+            new_terms.append(self.terms.pop(0))
+        self.terms = new_terms
 
     def __str__(self):
         readable_fcn = ""
