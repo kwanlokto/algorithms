@@ -3,14 +3,18 @@ import itertools
 import numpy as np
 from numpy.linalg import LinAlgError
 
+from expression import Expression, Term
 
-class MinCSP:
+
+class CSP:
     """
-    A constraint satisfaction problem which can also be used to 
+    A constraint satisfaction problem which can also be used to minimize a function
     """
     def __init__(self, variables):
         self.variables = variables  # should contain all variables
-        self.constraints = []
+        self.constraints = [
+            Constraint(Expression([Term(-1, variable)]), 0) for variable in variables
+        ]  # all variables should be >= 0
     
     def add_constraint(self, constraint):
         """
@@ -25,10 +29,14 @@ class MinCSP:
 
     def minimize(self, fcn):
         """
+        Minimize fcn with respect to self.constraints 
+
         Args:
-            fcn (Function): Function to minimize
+            fcn (Function): Linear function to minimize
+        Return:
+            float: Min value returned by fcn within the constraints
         """        
-        if self.constraints < len(self.variables):
+        if len(self.constraints) < len(self.variables):
             raise ValueError("Function is not constrained to an enclosed domain")
         
         # Create self.constraint subsets of size len(columns.keys())
@@ -62,7 +70,8 @@ class MinCSP:
 
     def get_poi(self, constraints):
         """
-        Calculate the constraints' point(s) of intersection using linear algebra. Create a matrix from the constraints which we then use to solve. 
+        Calculate the constraints' point(s) of intersection using linear algebra. Create a matrix from the constraints 
+        which we then use to solve. 
             - If there is no solution that means that the constraints are not linearly independent, which means no solution.
             - If there are multiple solutions then 
         Args:
@@ -73,29 +82,32 @@ class MinCSP:
         num_columns = len(self.variables)
         matrix = []
         constants = []
+        
         for constraint in constraints:
             expression = constraint.expression
-            for term in expression.terms:
-                matrix.append(np.zeros(num_columns))
-                
+            row = np.zeros(num_columns)
+            
+            for term in expression.terms:                
                 # Add the coefficient to the correct column
                 col_num = self.variables.index(term.variable)
-                matrix[col_num] = term.coefficient
+                row[col_num] = term.coefficient
             
+            matrix.append(row)
             constants.append(constraint.upper_bound - expression.constant)
         matrix = np.array(matrix)
+        print(matrix)
         return np.linalg.solve(matrix, constants)
 
 
 class Constraint:
-    def __init__(self, expression, lower_bound=None, upper_bound=None):
-        if lower_bound is None and upper_bound is None:
-            raise ValueError("Constraint be bounded above or below")
-        if lower_bound and upper_bound:
-            raise ValueError("There is no constraint on this expression")
+    def __init__(self, expression, upper_bound):
+        """
+        Args:
+            expression (Expression): Function expression
+            upper_bound (float): Upper bound on function results
+        """
         self.expression = expression
         self.upper_bound = upper_bound
-        self.lower_bound = lower_bound
 
     def satisfied(self, assignment):
         """
@@ -106,11 +118,21 @@ class Constraint:
         Returns:
             bool: Whether assignment was successful or not
         """
-        satisifed = True
-        result = self.expression.solve(assignment)
-        if self.lower_bound:
-            satisifed = result >= self.lower_bound
-        if self.upper_bound:
-            satisifed = result <= self.upper_bound if satisifed else False
-        
-        return satisifed
+        return self.expression.solve(assignment) <= self.upper_bound
+    
+    def __repr__(self):
+        return f'{self.expression} < {self.upper_bound}'
+
+
+variables = ['a', 'b']
+csp = CSP(variables)
+
+a = Term(5, 'a')
+b = Term(6, 'b')
+constraint1 = Constraint(Expression([a, b]), 11)
+csp.add_constraint(constraint1)
+
+def test(a, b):
+    return a - b
+
+print(csp.minimize(test))
