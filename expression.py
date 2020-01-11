@@ -5,8 +5,8 @@ class Expression:
     def __init__(self, terms=[], constant=0):
         self.terms = terms
         self.constant = constant
-        self.__simplify_expression()        
-    
+        self.__simplify_expression()
+
     def solve(self, assignments):
         """
         Solve the expression by assigning the variables values from assignment
@@ -34,7 +34,11 @@ class Expression:
         while found:
             found = False
             for var in assignments:
-                found = self.__substitute_one_var(var, assignments[var]) if not found else True
+                found = (
+                    self.__substitute_one_var(var, assignments[var])
+                    if not found
+                    else True
+                )
         self.__simplify_expression()
 
     def __substitute_one_var(self, sub_var, fcn):
@@ -59,13 +63,13 @@ class Expression:
                 self.terms.pop(i)
                 self.terms.extend(fcn.terms)
         return found
-    
+
     def __simplify_expression(self):
         """
         Remove all duplicate variables
         """
         new_terms = []
-        while len(self.terms) > 0:                  
+        while len(self.terms) > 0:
             for i in range(len(self.terms) - 1, 0, -1):
                 if self.terms[0] == self.terms[i]:
                     term = self.terms.pop(i)
@@ -76,9 +80,10 @@ class Expression:
     def __str__(self):
         readable_fcn = ""
         for term in self.terms:
-            readable_fcn += f'{term} + '
+            readable_fcn += f"{term} + "
         readable_fcn += str(self.constant)
         return readable_fcn
+
 
 class Term:
     def __init__(self, coefficient, variable):
@@ -89,23 +94,27 @@ class Term:
         """
         self.variable = variable
         self.coefficient = coefficient
-    
+
     def __eq__(self, other):
         if isinstance(other, Term):
             return self.variable == other.variable
-        return False 
-    
+        return False
+
     def __str__(self):
-        return f'{self.coefficient}{self.variable}' if self.coefficient > 0 else f'({self.coefficient}){self.variable}'
+        return (
+            f"{self.coefficient}{self.variable}"
+            if self.coefficient > 0
+            else f"({self.coefficient}){self.variable}"
+        )
 
 
-a = Term(5, 'a')
-b = Term(6, 'b')
-c = Term(7, 'c')
+a = Term(5, "a")
+b = Term(6, "b")
+c = Term(7, "c")
 fcn = Expression([a, b, c], 1)
 print(fcn)
 
-new_b = Expression([Term(4, 'a')], 0)
-new_c = Expression([Term(3, 'b')], 1)
-fcn.substitute({'b': new_b, 'c': new_c})
+new_b = Expression([Term(4, "a")], 0)
+new_c = Expression([Term(3, "b")], 1)
+fcn.substitute({"b": new_b, "c": new_c})
 print(fcn)
