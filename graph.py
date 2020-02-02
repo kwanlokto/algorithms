@@ -27,8 +27,8 @@ class Tree:
             adjacency_list[nodes[row_num]] = [
                 nodes[col_num] for col_num in range(len(row)) if row[col_num]
             ]
-
-        self.root_node = None
+        ordering = topological_sort(adjacency_matrix)
+        self.root_node = nodes[ordering[0]]
 
 
 def topological_sort(adjacency_matrix: np.ndarray):
