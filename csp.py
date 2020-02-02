@@ -102,7 +102,6 @@ class CSP:
             matrix.append(row)
             constants.append(constraint.upper_bound - expression.constant)
         matrix = np.array(matrix)
-        print(matrix)
         return np.linalg.solve(matrix, constants)
 
 
@@ -131,17 +130,17 @@ class Constraint:
         return f"{self.expression} < {self.upper_bound}"
 
 
-variables = ["a", "b"]
-csp = CSP(variables)
+if __name__ == "__main__":
+    variables = ["a", "b"]
+    csp = CSP(variables)
 
-a = Term(5, "a")
-b = Term(6, "b")
-constraint1 = Constraint(Expression([a, b]), 11)
-csp.add_constraint(constraint1)
-
-
-def test(a, b):
-    return a - b
+    a = Term(5, "a")
+    b = Term(6, "b")
+    constraint1 = Constraint(Expression([a, b]), 11)
+    csp.add_constraint(constraint1)
 
 
-print(csp.minimize(test))
+    def test(a, b):
+        return a - b
+
+    print(csp.minimize(test))

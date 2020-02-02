@@ -36,5 +36,6 @@ def sum_by_idx(array, indices):
     return total
 
 
-array = [90, 20, 30, 40, 50, 60, 70, 80, 90]
-print(regular_knapsack(2, array))
+if __name__ == "__main__":
+    array = [90, 20, 30, 40, 50, 60, 70, 80, 90]
+    print(regular_knapsack(2, array))

@@ -108,13 +108,14 @@ class Term:
         )
 
 
-a = Term(5, "a")
-b = Term(6, "b")
-c = Term(7, "c")
-fcn = Expression([a, b, c], 1)
-print(fcn)
+if __name__ == "__main__":
+    a = Term(5, "a")
+    b = Term(6, "b")
+    c = Term(7, "c")
+    fcn = Expression([a, b, c], 1)
+    print(fcn)
 
-new_b = Expression([Term(4, "a")], 0)
-new_c = Expression([Term(3, "b")], 1)
-fcn.substitute({"b": new_b, "c": new_c})
-print(fcn)
+    new_b = Expression([Term(4, "a")], 0)
+    new_c = Expression([Term(3, "b")], 1)
+    fcn.substitute({"b": new_b, "c": new_c})
+    print(fcn)
