@@ -38,7 +38,8 @@ class CSP:
             float: Min value returned by fcn within the constraints
         """
         if len(self.constraints) < len(self.variables):
-            raise ValueError("Function is not constrained to an enclosed domain")
+            raise ValueError(
+                "Function is not constrained to an enclosed domain")
 
         # Create self.constraint subsets of size len(columns.keys())
         poi = []
@@ -138,7 +139,6 @@ if __name__ == "__main__":
     b = Term(6, "b")
     constraint1 = Constraint(Expression([a, b]), 11)
     csp.add_constraint(constraint1)
-
 
     def test(a, b):
         return a - b

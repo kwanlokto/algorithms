@@ -49,7 +49,7 @@ def topological_sort(adjacency_matrix: np.ndarray):
         sorted_list.append(root)
         matrix[root] = np.zeros(len(matrix)).tolist()
         root_nodes.extend(get_empty_columns(matrix))
-    
+
     zero_matrix = np.zeros((len(matrix), len(matrix)))
     if np.array_equal(zero_matrix, matrix):
         raise Exception("Graph provided has a cycle")
