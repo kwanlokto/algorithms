@@ -7,6 +7,7 @@ class BaseTrait:
         self.__id = trait_id
         self.__trait_pool = trait_pool
         # every possible trait has equal probability to be chosen
+        self.value = None
         self.randomly_set_value()
 
     def __eq__(self, other):
