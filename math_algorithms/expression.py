@@ -2,6 +2,10 @@ from copy import deepcopy
 
 
 class Expression:
+    """
+    Linear expression. For constants a, b, c, ...
+        ax + by + cz + ... 
+    """
     def __init__(self, terms=[], constant=0):
         self.terms = terms
         self.constant = constant
