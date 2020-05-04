@@ -4,8 +4,9 @@ from copy import deepcopy
 class Expression:
     """
     Linear expression. For constants a, b, c, ...
-        ax + by + cz + ... 
+        ax + by + cz + ... + constant
     """
+
     def __init__(self, terms=[], constant=0):
         self.terms = terms
         self.constant = constant
@@ -32,7 +33,8 @@ class Expression:
         Substitute variables with corresponding variable assignments
 
         Args:
-            assignments (dict): each variable (key) is rewritten in terms of other variables
+            assignments (dict): each variable (key) is rewritten in terms of
+                                other variables
         """
         found = True
         while found:
@@ -110,16 +112,3 @@ class Term:
             if self.coefficient > 0
             else f"({self.coefficient}){self.variable}"
         )
-
-
-if __name__ == "__main__":
-    a = Term(5, "a")
-    b = Term(6, "b")
-    c = Term(7, "c")
-    fcn = Expression([a, b, c], 1)
-    print(fcn)
-
-    new_b = Expression([Term(4, "a")], 0)
-    new_c = Expression([Term(3, "b")], 1)
-    fcn.substitute({"b": new_b, "c": new_c})
-    print(fcn)

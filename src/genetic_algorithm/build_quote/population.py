@@ -1,8 +1,8 @@
 import math
 from random import choice
 
-from genetic_algorithms.base_population import BasePopulation
-from genetic_algorithms.build_quote.DNA import DNA
+from src.genetic_algorithm.base_population import BasePopulation
+from src.genetic_algorithm.build_quote.DNA import DNA
 
 
 class Population(BasePopulation):
@@ -21,10 +21,11 @@ class Population(BasePopulation):
             # Arbitratrary multiply for monte carlo method
             num_partners = (
                 math.ceil(dna.fitness / max_fitness * 100)
-                if max_fitness > 0 else 1
+                if max_fitness > 0
+                else 1
             )
 
-            # TODO: maybe in the future would wnat to copy the dna so we don't mutate the object
+            # TODO: want to copy the dna so we don't mutate the object
             self.mating_pool.extend([dna for _ in range(num_partners)])
 
     def next_generation(self, mutation_rate=0):

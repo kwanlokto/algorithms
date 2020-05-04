@@ -1,8 +1,7 @@
 from copy import deepcopy
-from random import choice, random
 
-from genetic_algorithms.base_DNA import BaseDNA
-from genetic_algorithms.base_trait import BaseTrait
+from src.genetic_algorithm.base_DNA import BaseDNA
+from src.genetic_algorithm.base_trait import BaseTrait
 
 
 class BasePopulation:
@@ -24,15 +23,19 @@ class BasePopulation:
             traits (dict): All traits in this population
                 {
                     trait_id: [list of possible options for that trait]
-                    trait_id: None  # indicates trait should have value betweeen 0 and 1
+                    trait_id: None  # indicates trait should have value
+                                      betweeen 0 and 1
                     ...
                 }
         """
         self.population = [
-            self.DNA([
-                BaseTrait(trait_id, traits[trait_id])
-                for trait_id in traits
-            ], self.target)
+            self.DNA(
+                [
+                    BaseTrait(trait_id, traits[trait_id])
+                    for trait_id in traits
+                ],
+                self.target,
+            )
             for _ in range(self.size)
         ]
 

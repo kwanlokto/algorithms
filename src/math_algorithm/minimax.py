@@ -1,8 +1,9 @@
-import numpy as np
-from graph import Node
-from math import inf
 import copy
-from collections import namedtuple
+from math import inf
+
+import numpy as np
+
+from src.data_structure.graph.node import Node
 
 
 def check_complete(state):
@@ -12,14 +13,17 @@ def check_complete(state):
             is_complete = is_complete and col != 0
     return is_complete
 
-def get_winning_player(state):
-    player1_win = np.ones(3)
-    player2_win = np.ones(3) + 1
 
-    diagonals = np.array([
-        [state[0][0], state[1][1], state[2][2]],
-        [state[0][2], state[1][1], state[2][0]]
-    ])
+def get_winning_player(state):
+    player1_win = np.ones(len(state))
+    player2_win = np.ones(len(state)) + 1
+
+    diagonals = np.array(
+        [
+            [state[i][i] for i in range(len(state))],
+            [state[len(state) - i - 1][i] for i in range(len(state))],
+        ]
+    )
     win_conditions = np.concatenate((state, state.T, diagonals), axis=0)
 
     for win_condition in win_conditions:
@@ -29,7 +33,7 @@ def get_winning_player(state):
             return -1
 
     if check_complete(state):
-        return 0    
+        return 0
     return None
 
 
@@ -39,7 +43,7 @@ def build_tree(state, player):
     current_node = Node(state)
     game_piece = 1 if player else 2
 
-    if get_winning_player(state) == None:
+    if get_winning_player(state) is None:
         for i in range(len(state)):
             for j in range(len(state[i])):
                 if state[i][j] == 0:
@@ -64,7 +68,7 @@ def alphabeta(node, depth, alpha, beta, player, heuristic):
             _, opponent_best_move = alphabeta(
                 child, depth - 1, alpha, beta, False, heuristic
             )
-            
+
             if value < opponent_best_move:
                 value = opponent_best_move
                 best_state = child.value
@@ -88,48 +92,20 @@ def alphabeta(node, depth, alpha, beta, player, heuristic):
 
 def print_board(game_state):
     # Format the game state to be human readable
-    gui_board = []
+    divider = "-----" * len(game_state)
     for row in range(len(game_state)):
-        gui_board.append([])
+        print(divider)
+        gui_board = ""
         for col in game_state[row]:
             if col == 0:
-                gui_board[row].append(" ")
+                gui_board += "|   |"
             elif col == 1:
-                gui_board[row].append("X")
+                gui_board += "| X |"
             elif col == 2:
-                gui_board[row].append("O")
-    
-    print("----------------")
-    print(
-        "| "
-        + str(gui_board[0][0])
-        + " || "
-        + str(gui_board[0][1])
-        + " || "
-        + str(gui_board[0][2])
-        + " |"
-    )
-    print("----------------")
-    print(
-        "| "
-        + str(gui_board[1][0])
-        + " || "
-        + str(gui_board[1][1])
-        + " || "
-        + str(gui_board[1][2])
-        + " |"
-    )
-    print("----------------")
-    print(
-        "| "
-        + str(gui_board[2][0])
-        + " || "
-        + str(gui_board[2][1])
-        + " || "
-        + str(gui_board[2][2])
-        + " |"
-    )
-    print("----------------")
+                gui_board += "| O |"
+        print(gui_board)
+    print(divider + "\n")
+
 
 def evaluate_winner(winner):
     if winner == 0:
@@ -154,16 +130,18 @@ if __name__ == "__main__":
             row = input("Enter a valid row number: ")
             col = input("Enter a valid column number: ")
 
-            valid =  game_state[int(row)][int(col)] == 0
-        
+            valid = game_state[int(row)][int(col)] == 0
+
         game_state[int(row)][int(col)] = 1
         print_board(game_state)
         tree = build_tree(game_state, False)
-        
+
         winner = get_winning_player(game_state)
         evaluate_winner(winner)
-        
-        game_state, _ = alphabeta(tree, 9, -inf, inf, False, get_winning_player)
+
+        game_state, _ = alphabeta(
+            tree, 9, -inf, inf, False, get_winning_player
+        )
         print_board(game_state)
         winner = get_winning_player(game_state)
         evaluate_winner(winner)

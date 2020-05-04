@@ -54,7 +54,8 @@ class BaseTrait:
         Randomly update this traits value
         """
         self.set_value(
-            choice(self.__trait_pool) if self.__trait_pool is not None
+            choice(self.__trait_pool)
+            if self.__trait_pool is not None
             else random()
         )
 
@@ -69,7 +70,8 @@ class BaseTrait:
                 *second_trait.get_trait_pool(),
             ]
 
-            # TODO: Need to find some way to simplify it while maintaining ratios
+            # TODO: Need to find some way to simplify it while maintaining
+            # ratios
             return cls(first_trait.__id, new_trait_pool)
 
         raise Exception("Cannot merge trait pools of two different traits")
