@@ -4,13 +4,14 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pylint = "==2.4.4"
-autopep8 = "*"
+flake8="==3.7.9"
+pytest-flake8 = "*"
+pytest = "*"
+gunicorn = "*"
 
 [packages]
 numpy="==1.18.0"
-flake8="==3.7.9"
-pytest = "*"
+falcon = "*"
 
 [requires]
 python_version = "3.7"
