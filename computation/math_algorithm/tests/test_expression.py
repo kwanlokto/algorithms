@@ -1,6 +1,6 @@
 import unittest
 
-from src.math_algorithm.expression import Expression, Term
+from computation.math_algorithm.expression import Expression, Term
 
 
 class TestExpression(unittest.TestCase):

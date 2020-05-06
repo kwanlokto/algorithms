@@ -1,6 +1,6 @@
 import unittest
 
-from src.math_algorithm.knapsack import regular_knapsack
+from computation.math_algorithm.knapsack import regular_knapsack
 
 
 class TestKnapsack(unittest.TestCase):

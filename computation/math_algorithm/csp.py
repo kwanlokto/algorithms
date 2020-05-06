@@ -3,7 +3,7 @@ import itertools
 import numpy as np
 from numpy.linalg import LinAlgError
 
-from src.math_algorithm.expression import Expression, Term
+from computation.math_algorithm.expression import Expression, Term
 
 
 class CSP:

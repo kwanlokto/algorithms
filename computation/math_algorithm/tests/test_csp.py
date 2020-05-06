@@ -1,7 +1,7 @@
 import unittest
 
-from src.math_algorithm.csp import CSP, Constraint
-from src.math_algorithm.expression import Expression, Term
+from computation.math_algorithm.csp import CSP, Constraint
+from computation.math_algorithm.expression import Expression, Term
 
 
 class TestCSP(unittest.TestCase):
