@@ -36,8 +36,8 @@ class Tree(Graph):
         mult_paths = []
         err_msg = ""
         matrix = np.array(self.adjacency_matrix)
-        for node_idx in range(len(matrix)):
-            parent = np.where(matrix[:, node_idx] == 1)[0]
+        for node_idx in range(self.num_nodes):
+            parent = np.where(matrix[:, node_idx] != 0)[0]
             if len(parent) > 1:  # Check that node has one parent
                 mult_paths.append(node_idx)
         if len(mult_paths) > 0:
@@ -51,7 +51,7 @@ class Tree(Graph):
             visited.append(node_idx)
 
         self.bfs(self.root_node, check_connected, visited=visited)
-        if len(visited) != len(matrix):
+        if len(visited) != self.num_nodes:
             err_msg += "Tree is not connected."
 
         if err_msg:
