@@ -9,28 +9,31 @@ class Graph:
         self.adjacency_matrix = adjacency_matrix
         self.num_nodes = len(nodes)
 
-    def bfs(self, start_node, fcn=None, **kwargs):
+    def bfs(self, start_node, fcn=None, parent=None, **kwargs):
         """
         Breadth first search
 
         Args:
             start_node (int): index in self.adjacency_matrix
             fcn (function): Function to run on each node
+            parent (list): Parents of each node
         """
         matrix = np.array(self.adjacency_matrix)
         visited = []
         queue = [start_node]
         while len(queue) > 0:
             node = queue.pop(0)
+            if fcn is not None:
+                fcn(self.nodes, node, **kwargs)
 
-            if node not in visited:
-                if fcn is not None:
-                    fcn(self.nodes, node, **kwargs)
-                visited.append(node)
-                for child in np.where(matrix[node] != 0)[0]:
+            for child in np.where(matrix[node] > 0)[0]:
+                if child not in visited:
                     queue.append(child)
+                    visited.append(child)
+                    if parent is not None:
+                        parent[child] = node
 
-    def dfs(self, start_node, fcn=None, **kwargs):
+    def dfs(self, start_node, fcn=None, parent=None, **kwargs):
         """
         Depth first search.
 
