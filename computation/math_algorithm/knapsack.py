@@ -2,7 +2,6 @@ def regular_knapsack(bag_size, items):
     """
     Maximize total value when only taking 'bag_size' items from 'items'
 
-    OPT(i) = max()
     Args:
         bag_size (int): number of items which we can carry
         items (list): the value of each associated item
@@ -19,9 +18,7 @@ def regular_knapsack(bag_size, items):
             total = sum_by_idx(items, values[item_num - 1][items_taken])
 
             new_total = (  # assume weight 1
-                sum_by_idx(
-                    items, values[item_num - 1][items_taken - 1]
-                )
+                sum_by_idx(items, values[item_num - 1][items_taken - 1])
                 + items[item_num]
             )
 

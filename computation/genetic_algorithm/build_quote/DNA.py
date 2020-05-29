@@ -1,7 +1,7 @@
 import math
 from random import random
 
-from src.genetic_algorithm.base_DNA import BaseDNA
+from computation.genetic_algorithm.base_DNA import BaseDNA
 
 
 class DNA(BaseDNA):

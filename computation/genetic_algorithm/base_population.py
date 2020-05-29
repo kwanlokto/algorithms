@@ -1,7 +1,7 @@
 from copy import deepcopy
 
-from src.genetic_algorithm.base_DNA import BaseDNA
-from src.genetic_algorithm.base_trait import BaseTrait
+from computation.genetic_algorithm.base_DNA import BaseDNA
+from computation.genetic_algorithm.base_trait import BaseTrait
 
 
 class BasePopulation:

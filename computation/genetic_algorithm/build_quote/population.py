@@ -1,8 +1,8 @@
 import math
 from random import choice
 
-from src.genetic_algorithm.base_population import BasePopulation
-from src.genetic_algorithm.build_quote.DNA import DNA
+from computation.genetic_algorithm.base_population import BasePopulation
+from computation.genetic_algorithm.build_quote.DNA import DNA
 
 
 class Population(BasePopulation):

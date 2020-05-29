@@ -3,7 +3,15 @@ from math import inf
 
 import numpy as np
 
-from src.data_structure.graph.node import Node
+
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.children = []
+
+    def add_child(self, node):
+        if isinstance(node, Node):
+            self.children.append(node)
 
 
 def check_complete(state):

@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from src.genetic_algorithm.base_trait import BaseTrait
+from computation.genetic_algorithm.base_trait import BaseTrait
 
 
 class BaseDNA:
