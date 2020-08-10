@@ -43,8 +43,7 @@ class NeuralNetwork:
         """
         Run forward propogation to calculate the expected result
         """
-        self.hidden_layer = sigmoid(np.dot(self.input, self.weights1))
-        self.output = sigmoid(np.dot(self.hidden_layer, self.weights2))
+        self.hidden_layer, self.output = self.predict(self.input)
 
     def backprop(self):
 
@@ -67,3 +66,19 @@ class NeuralNetwork:
         # update the weights with the derivative (slope) of the loss function
         self.weights1 -= self.learn_rate * d_weights1
         self.weights2 -= self.learn_rate * d_weights2
+
+    def predict(self, x):
+        """
+        Return the predicted output giving the model's hidding weights
+
+        Args:
+            x (ndarray): n x m input where n is the number of training
+                         examples and m is the size of a single input
+        Returns:
+            tuple:
+                ndarray: neuron values at the hidden layer (
+                         we don't know what this represents)
+                float: probability of output being a 1
+        """
+        hidden_layer = sigmoid(np.dot(x, self.weights1))
+        return hidden_layer, sigmoid(np.dot(hidden_layer, self.weights2))
