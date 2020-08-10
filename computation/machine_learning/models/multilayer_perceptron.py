@@ -5,10 +5,11 @@ from computation.machine_learning.activation_functions import (
 )
 
 
-class NeuralNetwork:
+class MLP:
     def __init__(self, x, y, learn_rate=1):
         """
-        Create a neural network with one hidden layer
+        Create a neural network with one hidden layer (multilayer
+        perceptron)
         Each matrix has the following dimensions:
             Input Matrix: n x m
             Weight 1 Matrix: m x 4
@@ -78,7 +79,7 @@ class NeuralNetwork:
             tuple:
                 ndarray: neuron values at the hidden layer (
                          we don't know what this represents)
-                float: probability of output being a 1
+                ndarray: probability of each output being a 1
         """
         hidden_layer = sigmoid(np.dot(x, self.weights1))
         return hidden_layer, sigmoid(np.dot(hidden_layer, self.weights2))

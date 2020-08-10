@@ -3,7 +3,7 @@ import string
 import numpy as np
 
 from computation.genetic_algorithm.build_quote.population import Population
-from computation.machine_learning.neural_network import NeuralNetwork
+from computation.machine_learning.models.multilayer_perceptron import MLP
 
 if __name__ == "__main__":
     # Genetic algorithm to reconstruct 'testing'
@@ -20,7 +20,7 @@ if __name__ == "__main__":
     # Learn XOR function
     x = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
     y = np.array([[0], [1], [1], [0]])
-    nn = NeuralNetwork(x, y)
+    nn = MLP(x, y)
 
     i = 0
     while i < 100000:
