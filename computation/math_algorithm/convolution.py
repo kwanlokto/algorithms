@@ -123,7 +123,9 @@ def run_filters(x, kernels):
     )
     # Convolving the image by the filter(s).
     for kernel_num in range(kernels.shape[0]):
-        curr_kernel = kernels[kernel_num, :]  # getting a filter from the bank.
+        curr_kernel = kernels[
+            kernel_num, :
+        ]  # getting a filter from the bank.
         if len(curr_kernel.shape) == 3:
             conv_map = filter_3D(x, curr_kernel)
         elif len(curr_kernel.shape) == 2:

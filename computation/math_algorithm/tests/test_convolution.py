@@ -61,15 +61,14 @@ class TestConvolution(unittest.TestCase):
         )
 
     def test_filter_3D(self):
-        input_data = np.array([
-            [[1, 1], [3, 1], [1, 1]],
-            [[0, 1], [-1, 1], [1, 1]],
-            [[2, 1], [2, 1], [-1, 1]],
-        ])
-        kernel = np.array([
-            [[-1, 1], [0, 1]],
-            [[2, 1], [1, 1]]
-        ])
+        input_data = np.array(
+            [
+                [[1, 1], [3, 1], [1, 1]],
+                [[0, 1], [-1, 1], [1, 1]],
+                [[2, 1], [2, 1], [-1, 1]],
+            ]
+        )
+        kernel = np.array([[[-1, 1], [0, 1]], [[2, 1], [1, 1]]])
         result = filter_2D(input_data, kernel)
 
         assert type(result) == np.ndarray
@@ -90,8 +89,6 @@ class TestConvolution(unittest.TestCase):
         assert type(result) == np.ndarray
 
         self.assertListEqual(
-            result.tolist(), [
-                [[0.0, 4.0], [1.0, 5.0]],
-                [[2.0, 6.0], [3.0, 7.0]]
-            ]
+            result.tolist(),
+            [[[0.0, 4.0], [1.0, 5.0]], [[2.0, 6.0], [3.0, 7.0]]],
         )
