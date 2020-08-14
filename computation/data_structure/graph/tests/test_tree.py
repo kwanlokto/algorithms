@@ -45,3 +45,8 @@ class TestTree(unittest.TestCase):
     def test_get_depth(self):
         depth = self.tree.get_depth(2)
         self.assertEqual(depth, 2)
+
+    def test_construct_graph_of_nodes(self):
+        root_node = self.tree.construct_graph_of_nodes()
+
+        assert str(root_node) == "2 -> 1 -> 3"
