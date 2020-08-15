@@ -16,5 +16,5 @@ class TestNetwork(unittest.TestCase):
         self.network = Network(adj_matrix)
 
     def test_ford_fulkerson(self):
-        depth = self.network.ford_fulkerson(0, 5)
-        assert depth == 23
+        max_flow = self.network.ford_fulkerson(0, 5)
+        assert max_flow == 23
