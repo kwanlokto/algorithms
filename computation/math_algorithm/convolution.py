@@ -34,7 +34,7 @@ def _flip(x):
 
     Args:
         x (ndarray): 2D square matrix
-    Return:
+    Returns:
         ndarray: rotated matrix
     """
     flipped_x = []
