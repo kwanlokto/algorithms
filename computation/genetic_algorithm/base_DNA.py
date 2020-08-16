@@ -38,7 +38,6 @@ class BaseDNA:
 
         Args:
             trait_id: a unique identifier to determine the trait we want
-
         Returns:
             Trait: Trait with id trait_id
         """
