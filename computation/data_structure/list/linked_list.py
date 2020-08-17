@@ -59,7 +59,7 @@ class LinkedList:
                 self.next.prev = self
             else:
                 raise Exception(
-                    f"Linked list must have at least one element"
+                    "Linked list must have at least one element"
                 )
         else:
             curr = self

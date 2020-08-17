@@ -2,12 +2,12 @@ import numpy as np
 
 
 class Graph:
-    def __init__(self, adjacency_matrix: list, nodes: list):
-        if len(nodes) != len(adjacency_matrix):
+    def __init__(self, adjacency_matrix: list, values: list):
+        if len(values) != len(adjacency_matrix):
             raise Exception("Mismatch in the number of nodes")
-        self.nodes = nodes
+        self.values = values
         self.adjacency_matrix = adjacency_matrix
-        self.num_nodes = len(nodes)
+        self.num_nodes = len(values)
 
     def bfs(self, start_node, fcn=None, parent=None, **kwargs):
         """
@@ -24,7 +24,7 @@ class Graph:
         while len(queue) > 0:
             node = queue.pop(0)
             if fcn is not None:
-                fcn(self.nodes, node, **kwargs)
+                fcn(self.values, node, **kwargs)
 
             for child in np.where(matrix[node] > 0)[0]:
                 if child not in visited:
@@ -49,7 +49,7 @@ class Graph:
 
             if node not in visited:
                 if fcn is not None:
-                    fcn(self.nodes, node, **kwargs)
+                    fcn(self.values, node, **kwargs)
                 visited.append(node)
                 for child in np.where(matrix[node] != 0)[0]:
                     queue.append(child)

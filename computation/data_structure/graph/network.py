@@ -14,7 +14,6 @@ class Network(Graph):
         Args:
             src (int): Node index of the source
             sink (int): Node index of the sink
-
         Returns:
             int: Max flow through the network
         """

@@ -1,20 +1,55 @@
 import numpy as np
 
 from computation.data_structure.graph.graph import Graph
+from computation.data_structure.graph.node import Node
 
 
 class Tree(Graph):
-    def __init__(self, adjacency_matrix: list, nodes: list):
-        super().__init__(adjacency_matrix, nodes)
+    """
+    Implemented with the adjacency matrix
+    """
+
+    def __init__(self, adjacency_matrix: list, values: list):
+        super().__init__(adjacency_matrix, values)
         self.__ordering = topological_sort(adjacency_matrix)
         self.root_node = self.__ordering[0]
         self.__validate_tree()
 
+    def __repr__(self):
+        return f"Tree({self.adjacency_matrix}, {self.values})"
+
     def __str__(self):
         tree = ""
         for node_idx in self.__ordering:
-            tree = self.nodes[node_idx]
+            tree = self.values[node_idx]
         return tree
+
+    def construct_graph_of_nodes(self):
+        """
+        Create the subgraph of Nodes which start at the root of the tree
+
+        Returns:
+            Node: root node of the tree
+        """
+        # Create sub trees for the children
+        return self.__create_node(self.root_node)
+
+    def __create_node(self, idx):
+        """
+        Create the subgraph of Nodes which start at self.values[idx]
+
+        Args:
+            idx (int): index of current subgraph's root node
+        Returns:
+            Node: self.values[idx] Node
+        """
+        node = Node(self.values[idx])
+        children = np.where(self.adjacency_matrix[idx],)[
+            0
+        ]  # Children indices in the adjacency matrix
+        for child_idx in children:
+            node.add_child(self.__create_node(child_idx))
+        return node
 
     def get_depth(self, node_idx):
         matrix = np.array(self.adjacency_matrix)
@@ -22,7 +57,7 @@ class Tree(Graph):
 
         while node_idx != self.root_node:
             # Get the node's parent index in the adj matrix
-            parent = np.where(matrix[:, node_idx] == 1)[0]
+            parent = np.where(matrix[:, node_idx])[0]
             if len(parent) == 1:
                 depth += 1
                 node_idx = parent[0]
@@ -47,7 +82,7 @@ class Tree(Graph):
 
         visited = []
 
-        def check_connected(nodes, node_idx, visited):
+        def check_connected(values, node_idx, visited):
             visited.append(node_idx)
 
         self.bfs(self.root_node, check_connected, visited=visited)

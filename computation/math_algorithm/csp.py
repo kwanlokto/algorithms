@@ -37,7 +37,7 @@ class CSP:
 
         Args:
             fcn (Function): Linear function to minimize
-        Return:
+        Returns:
             float: Min value returned by fcn within the constraints
         """
         if len(self.constraints) < len(self.variables):

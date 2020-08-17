@@ -6,3 +6,5 @@
 .DS_store
 
 __pycache__/
+
+data_sets/
