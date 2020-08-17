@@ -9,10 +9,15 @@ pytest-flake8 = "*"
 pytest = "*"
 gunicorn = "*"
 pylint = "*"
+black = "*"
 
 [packages]
 numpy="==1.18.0"
 falcon = "*"
+autograd = "*"
+pandas = "*"
+matplotlib = "*"
+scikit-image = "*"
 
 [requires]
 python_version = "3.7"
